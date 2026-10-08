@@ -2,12 +2,12 @@ clear all;
 close all;
 
 % Lecture des images
-Im1 = imread('cancale1.pgm');
-Im2 = imread('cancale2.pgm');
-Im3 = imread(cancale13.pgm');
-Im1_coul = imread('cancale1.jpg');
-Im2_coul = imread('cancale2.jpg');
-Im3_coul = imread('cancale3.jpg');
+Im1 = imread('../images/cancale1.pgm');
+Im2 = imread('../images/cancale2.pgm');
+Im3 = imread('../images/cancale3.pgm');
+Im1_coul = imread('../images/cancale1.jpg');
+Im2_coul = imread('../images/cancale2.jpg');
+Im3_coul = imread('../images/cancale3.jpg');
  
 % Affichage des deux premières images en niveaux de gris
 figure;
