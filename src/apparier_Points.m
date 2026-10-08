@@ -68,15 +68,18 @@ moy2=mean(vois2,2);
 
 % Variance des niveaux de gris du voisinage de chaque point
 % Utilisation de var
-var1=var(vois1);
-var2=var(vois2);
+var1=var(vois1,1,2);
+var2=var(vois2,1,2);
 %%%%%%%%%%%%%%%%%
 %% A COMPLETER %%
 %%%%%%%%%%%%%%%%%
 
 % Pour chaque combinaison de paires de points, la covariance 
 % entre les deux voisinages : le numerateur dans la formule ZNCC
-denom=sum((vois1(:)-var1).^2)*sum((vois2(:)-var2).^2);
+vois1_centre = vois1(i1,:) - moy1(i1);
+vois2_centre = vois2(i2,:) - moy2(i2);
+covar = mean(vois1_centre .* vois2_centre, 2);
+
 %%%%%%%%%%%%%%%%%
 %% A COMPLETER %%
 %%%%%%%%%%%%%%%%%
@@ -84,11 +87,12 @@ denom=sum((vois1(:)-var1).^2)*sum((vois2(:)-var2).^2);
 % Calcul du score de correlation : 
 % ajouter le denominateur dans la formule ZNCC 
 % (le produit des variances)
-cor=(vois1-var1)*(vois2-var2)/denom;
+denom=sqrt(var1(i1) .* var2(i2));
 %%%%%%%%%%%%%%%%%
 %% A COMPLETER %%
 %%%%%%%%%%%%%%%%%
 
+cor=covar./denom;
 % Affectation a la matrice C
 C(indptI1(i1)+(indptI2(i2)-1)*nptI1) = cor';
 
