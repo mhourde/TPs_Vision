@@ -23,4 +23,12 @@ K = floor(TailleFenetre/2);
 %%%%%%%%%%%%%%%%%
 %% A COMPLETER %%
 %%%%%%%%%%%%%%%%%
+xPt=xyPt(:,1);
+yPt=xyPt(:,2);
 
+for i=1:npt
+    x=xPt(i);
+    y=yPt(i);
+    vois=I((x-K):(x+K),(y-K):(y+K));
+    voisins(i,:)=vois(:);
+end
