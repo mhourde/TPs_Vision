@@ -45,6 +45,8 @@ nbptintI1 = size(indptI1,1); nbptintI2 = size(indptI2,1);
 % Determination du voisinage : vois1, vois2 matrices composees 
 % pour chaque ligne des niveaux de gris du voisinage du point
 % Appel a la fonction voisinage
+vois1=voisinage(I1,I1(indptI1,:),K);
+vois2=voisinage(I2,I2(indptI2,:),K);
 %%%%%%%%%%%%%%%%%
 %% A COMPLETER %%
 %%%%%%%%%%%%%%%%%
@@ -58,18 +60,23 @@ i1 = i1(:); i2 = i2(:);
 % Pour les images I1 et I2
 % Moyenne des niveaux de gris du voisinage de chaque point
 % Utilisation de mean
+moy1=mean(vois1,2);
+moy2=mean(vois2,2);
 %%%%%%%%%%%%%%%%%
 %% A COMPLETER %%
 %%%%%%%%%%%%%%%%%
 
 % Variance des niveaux de gris du voisinage de chaque point
 % Utilisation de var
+var1=var(vois1);
+var2=var(vois2);
 %%%%%%%%%%%%%%%%%
 %% A COMPLETER %%
 %%%%%%%%%%%%%%%%%
 
 % Pour chaque combinaison de paires de points, la covariance 
 % entre les deux voisinages : le numerateur dans la formule ZNCC
+denom=sum((vois1(:)-var1).^2)*sum((vois2(:)-var2).^2);
 %%%%%%%%%%%%%%%%%
 %% A COMPLETER %%
 %%%%%%%%%%%%%%%%%
@@ -77,6 +84,7 @@ i1 = i1(:); i2 = i2(:);
 % Calcul du score de correlation : 
 % ajouter le denominateur dans la formule ZNCC 
 % (le produit des variances)
+cor=(vois1-var1)*(vois2-var2)/denom;
 %%%%%%%%%%%%%%%%%
 %% A COMPLETER %%
 %%%%%%%%%%%%%%%%%
