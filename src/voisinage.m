@@ -29,6 +29,6 @@ yPt=xyPt(:,2);
 for i=1:npt
     x=xPt(i);
     y=yPt(i);
-    vois=I((x-K):(x+K),(y-K):(y+K));
+    vois=I(y-K:y+K,x-K:x+K);
     voisins(i,:)=vois(:);
 end

@@ -46,4 +46,3 @@ affichage_appariement(Im2,mesurex2,mesurey2,'Points d''interet correspondants Im
 XY_C1 = [mesurex1(:) mesurey1(:)];
 XY_C2 = [mesurex2(:) mesurey2(:)];
 end
-

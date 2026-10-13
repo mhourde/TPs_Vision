@@ -45,8 +45,8 @@ nbptintI1 = size(indptI1,1); nbptintI2 = size(indptI2,1);
 % Determination du voisinage : vois1, vois2 matrices composees 
 % pour chaque ligne des niveaux de gris du voisinage du point
 % Appel a la fonction voisinage
-vois1=voisinage(I1,I1(indptI1,:),K);
-vois2=voisinage(I2,I2(indptI2,:),K);
+vois1=voisinage(I1,Ptint1(indptI1,:),K);
+vois2=voisinage(I2,Ptint2(indptI2,:),K);
 %%%%%%%%%%%%%%%%%
 %% A COMPLETER %%
 %%%%%%%%%%%%%%%%%
@@ -95,5 +95,3 @@ denom=sqrt(var1(i1) .* var2(i2));
 cor=covar./denom;
 % Affectation a la matrice C
 C(indptI1(i1)+(indptI2(i2)-1)*nptI1) = cor';
-
-
