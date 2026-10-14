@@ -47,6 +47,8 @@ nbptintI1 = size(indptI1,1); nbptintI2 = size(indptI2,1);
 % Appel a la fonction voisinage
 vois1=voisinage(I1,Ptint1(indptI1,:),K);
 vois2=voisinage(I2,Ptint2(indptI2,:),K);
+vois1 = double(vois1);
+vois2 = double(vois2);
 %%%%%%%%%%%%%%%%%
 %% A COMPLETER %%
 %%%%%%%%%%%%%%%%%

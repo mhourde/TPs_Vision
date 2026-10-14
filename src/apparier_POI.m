@@ -28,7 +28,26 @@ ind2_1 = ind2_1(:);
 %% PARTIE A MODIFIER AFIN D'APPLIQUER SYMETRIE ET SEUILLAGE %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Cette premiere ligne doit etre modifiee pour appliquer les contraintes souhaitees % 
-ind1=ind1_2;
+% Liste de tous les indices de l'image 1 (de 1 à nptI1)
+i = (1:length(ind1_2))';
+
+% 1. Contrainte de seuillage : le score de corrélation max doit dépasser le seuil
+masque_seuillage = (maxI1(:) >= seuil);
+
+% 2. Contrainte de symétrie : le meilleur correspondant dans I2 (ind1_2) 
+% doit avoir pour meilleur correspondant dans I1 le point d'origine (i)
+masque_symetrie = (ind2_1(ind1_2(i)) == i);
+
+% Combinaisons pour les tests (commentez/décommentez selon le test voulu) :
+
+% Tester UNIQUEMENT le seuil (Figure 4b) :
+ind1 = find(masque_seuillage);
+
+% Tester UNIQUEMENT la symétrie (Figure 4a) :
+% ind1 = find(masque_symetrie);
+
+% Tester les DEUX contraintes ensemble (Figure 4c) :
+% ind1 = find(masque_seuillage & masque_symetrie);
 
 % Cette deuxieme doit etre gardee telle quelle
 ind2 = ind1_2(ind1);
