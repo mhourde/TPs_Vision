@@ -30,16 +30,36 @@ function [H] = homographie(XY_C1,XY_C2)
 %       ... etc ... )
 
 % Stocker dans une variable le nombre de points apparies
-% ... A completer ...
+nbCorrespondances = size(XY_C1,1);
 
 % Construction des matrices/vecteurs utiles pour construire la matrice A
-% NE PAS UTILISER DE BOUCLE FORT
-% ... A completer ...
+% NE PAS UTILISER DE BOUCLE FOR
+A = zeros(2*nbCorrespondances, 9);
+
+% Ligne 1
+A(1:2:end,1) = XY_C1(:,1);
+A(1:2:end,2) = XY_C1(:,2);
+A(1:2:end,3) = 1;
+A(1:2:end,7) = -XY_C1(:,1) .* XY_C2(:,1);
+A(1:2:end,8) = -XY_C1(:,2) .* XY_C2(:,1);
+A(1:2:end,9) = -XY_C2(:,1);
+
+% Ligne 2
+A(2:2:end,4) = XY_C1(:,1);
+A(2:2:end,5) = XY_C1(:,2);
+A(2:2:end,6) = 1;
+A(2:2:end,7) = -XY_C1(:,1) .* XY_C2(:,2);
+A(2:2:end,8) = -XY_C1(:,2) .* XY_C2(:,2);
+A(2:2:end,9) = -XY_C2(:,2);
 
 % Estimation des parametres de H par decomposition en valeurs singulieres
 % Utiliser la fonction matlab svd : 
 % H est le vecteur propre associee a la plus petite valeur propre de A^TA
-% ... A completer ...
+[V,D] = eig(A' * A);
+[~,idx] = min(diag(D));
+h = V(:,idx);
 
 % Former la matrice H de taille 3x3
-% ... A completer ...
+H = [h(1) h(2) h(3) ;
+     h(4) h(5) h(6) ;
+     h(7) h(8) h(9)];

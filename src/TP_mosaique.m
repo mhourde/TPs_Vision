@@ -18,7 +18,7 @@ affichage_image(Im2,'Image 2',1,2,2);
 TailleFenetre = 15;
 NbPoints = 100; 
 k = 0.05;
-seuil = 0.9;
+seuil = 0.85;
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -42,13 +42,13 @@ affichage_POI(Im2,XY_2,'POI Image 2',1,2,2);
 % Estimation (et verification) de l'homographie %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % A DECOMMENTER QUAND HOMOGRAPHIE AURA ETE COMPLETEE
-% H = homographie(XY_C1,XY_C2)
+H = homographie(XY_C1,XY_C2)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
 % Calcul de la mosaique %
 %%%%%%%%%%%%%%%%%%%%%%%%%
 % A DECOMMENTER QUAND HOMOGRAPHIE AURA ETE VALIDEE
-% Imos = mosaique(Im1,Im2,H);
+Imos = mosaique(Im1,Im2,H);
 % figure; 
 % affichage_image(uint8(Imos),'Mosaique obtenue a partir des 2 images initiales',1,1,1);
 % SAUVEGARDE DE LA MOSAIQUE A DEUX IMAGES

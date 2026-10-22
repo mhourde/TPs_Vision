@@ -41,13 +41,13 @@ masque_symetrie = (ind2_1(ind1_2(i)) == i);
 % Combinaisons pour les tests (commentez/décommentez selon le test voulu) :
 
 % Tester UNIQUEMENT le seuil (Figure 4b) :
-ind1 = find(masque_seuillage);
+%ind1 = find(masque_seuillage);
 
 % Tester UNIQUEMENT la symétrie (Figure 4a) :
 % ind1 = find(masque_symetrie);
 
 % Tester les DEUX contraintes ensemble (Figure 4c) :
-% ind1 = find(masque_seuillage & masque_symetrie);
+ind1 = find(masque_seuillage & masque_symetrie);
 
 % Cette deuxieme doit etre gardee telle quelle
 ind2 = ind1_2(ind1);
