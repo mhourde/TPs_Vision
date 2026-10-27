@@ -21,7 +21,7 @@ xy_coinsI2_R2 = [1 1; nbcI2 1; nbcI2 nblI2; 1 nblI2];
 
 % Application de l'homographie Hinv sur ces coins. 
 % Calcul des images des coins dans I1. 
-xy_coinsI2_R1 = appliquerHomographie(Hinv,xy_coinsI2_R2)
+xy_coinsI2_R1 = appliquerHomographie(Hinv,xy_coinsI2_R2);
 
 % Determination des dimensions de l'image mosaique, 
 % les xmin ymin xmax ymax, ou :
