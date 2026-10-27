@@ -58,11 +58,11 @@ imwrite(uint8(Imos),'mosaique2.pgm');
 % Version 2 pour la reconstruction                %
 % A DECOMMENTER QUAND MOSAIQUEBIS AURA ETE ECRITE %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Imosbis = mosaiquebis(Im1,Im2,H);
-% figure; 
-% affichage_image(uint8(Imosbis),'Mosaique obtenue a partir des 2 images initiales (version 2)',1,1,1);
+Imosbis = mosaiquebis(Im1,Im2,H);
+figure; 
+affichage_image(uint8(Imosbis),'Mosaique obtenue a partir des 2 images initiales (version 2)',1,1,1);
 % SAUVEGARDE DE LA MOSAIQUE A DEUX IMAGES VERSION 2
-% imwrite(uint8(Imosbis),'mosaique2_bis.pgm');
+imwrite(uint8(Imosbis),'mosaique2_bis.pgm');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Version 3 pour la reconstruction avec les couleurs R, G et B %
