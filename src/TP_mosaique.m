@@ -78,5 +78,38 @@ imwrite(uint8(Imoscoul),'mosaique2_coul.pgm');
 % Version 4 pour la reconstruction avec 3 images %  
 % en couleurs et/ou en niveaux de gris           %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% À COMPLETER % 
+% MOSAIQUE ENTRE 2 ET 3
+% Harris
+[XY_3,Res_3] = harris(Im3,TailleFenetre,NbPoints,k);
+figure;
+affichage_POI(Im3,XY_3,'POI Image 3',1,2,1);
+
+% Apparier_POI
+[XY_C1,XY_C2] = apparier_POI(Im2,XY_2,Im3,XY_3,TailleFenetre,seuil);
+
+% Homographie
+H = homographie(XY_C1,XY_C2)
+
+% Mosaique
+Imos2 = mosaiquebis(Im2,Im3,H);
+figure; 
+affichage_image(uint8(Imos2),'Mosaique obtenue a partir des images 2 et 3',1,1,1);
+imwrite(uint8(Imos2),'mosaique2.2_bis.pgm');
+
+% MOSAIQUE ENTRE 1-2 ET 2-3
+% Harris
+[XY_mos1,Res_mos1] = harris(Imosbis,TailleFenetre,NbPoints,k);
+[XY_mos2,Res_mos2] = harris(Imos2,TailleFenetre,NbPoints,k);
+
+% Apparier_POI
+[XY_C1,XY_C2] = apparier_POI(Imosbis,XY_mos1,Imos2,XY_mos2,TailleFenetre,seuil);
+
+% Homographie
+H = homographie(XY_C1,XY_C2)
+
+% Mosaique
+Imos3 = mosaique(Imosbis,Imos2,H);
+figure; 
+affichage_image(uint8(Imos3),'Mosaique obtenue a partir des 3 images couleurs initiales',1,1,1);
+imwrite(uint8(Imos3),'mosaique3.pgm');
 
