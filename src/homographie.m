@@ -56,10 +56,12 @@ A(2:2:end,9) = -XY_C2(:,2);
 % Utiliser la fonction matlab svd : 
 % H est le vecteur propre associee a la plus petite valeur propre de A^TA
 [V,D] = eig(A' * A);
-[~,idx] = min(diag(D));
+[~,idx] = min(abs(diag(D)));
 h = V(:,idx);
 
 % Former la matrice H de taille 3x3
 H = [h(1) h(2) h(3) ;
      h(4) h(5) h(6) ;
      h(7) h(8) h(9)];
+
+H=H./H(3,3);

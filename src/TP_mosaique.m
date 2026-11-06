@@ -42,7 +42,7 @@ affichage_POI(Im2,XY_2,'POI Image 2',1,2,2);
 % Estimation (et verification) de l'homographie %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % A DECOMMENTER QUAND HOMOGRAPHIE AURA ETE COMPLETEE
-H = homographie(XY_C1,XY_C2)
+H = homographie(XY_C1,XY_C2);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
 % Calcul de la mosaique %
@@ -80,36 +80,28 @@ imwrite(uint8(Imoscoul),'mosaique2_coul.pgm');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % MOSAIQUE ENTRE 2 ET 3
 % Harris
+H_inv=inv(H);
+H_inv=H_inv./H_inv(3,3);
+Imos21 = mosaiquebis(Im2,Im1,H_inv);
+
 [XY_3,Res_3] = harris(Im3,TailleFenetre,NbPoints,k);
+[XY_mos,Res_mos] = harris(Imos21,TailleFenetre,NbPoints,k);
+
+% Apparier_POI
+[XY_CM,XY_C3] = apparier_POI(Imos21,XY_mos,Im3,XY_3,TailleFenetre,seuil);
+
+% Homographie
+H2 = homographie(XY_CM,XY_C3);
+
+% Mosaique en niveaux de gris
+Imos2 = mosaiquebis(Imos21,Im3,H2);
+figure; 
+affichage_image(uint8(Imos2),'Mosaique obtenue a partir des images 1 2 et 3',1,1,1);
+imwrite(uint8(Imos2),'mosaique3_bis.pgm');
+
+% Mosaique en couleur avec les 3 images
+Imoscoul21 = mosaiquecoul(Im2_coul,Im1_coul,H_inv);
+Imoscoul3 = mosaiquecoul(Imoscoul21,Im3_coul,H2);
 figure;
-affichage_POI(Im3,XY_3,'POI Image 3',1,2,1);
-
-% Apparier_POI
-[XY_C1,XY_C2] = apparier_POI(Im2,XY_2,Im3,XY_3,TailleFenetre,seuil);
-
-% Homographie
-H = homographie(XY_C1,XY_C2)
-
-% Mosaique
-Imos2 = mosaiquebis(Im2,Im3,H);
-figure; 
-affichage_image(uint8(Imos2),'Mosaique obtenue a partir des images 2 et 3',1,1,1);
-imwrite(uint8(Imos2),'mosaique2.2_bis.pgm');
-
-% MOSAIQUE ENTRE 1-2 ET 2-3
-% Harris
-[XY_mos1,Res_mos1] = harris(Imosbis,TailleFenetre,NbPoints,k);
-[XY_mos2,Res_mos2] = harris(Imos2,TailleFenetre,NbPoints,k);
-
-% Apparier_POI
-[XY_C1,XY_C2] = apparier_POI(Imosbis,XY_mos1,Imos2,XY_mos2,TailleFenetre,seuil);
-
-% Homographie
-H = homographie(XY_C1,XY_C2)
-
-% Mosaique
-Imos3 = mosaique(Imosbis,Imos2,H);
-figure; 
-affichage_image(uint8(Imos3),'Mosaique obtenue a partir des 3 images couleurs initiales',1,1,1);
-imwrite(uint8(Imos3),'mosaique3.pgm');
-
+affichage_image(uint8(Imoscoul3),'Mosaique couleur obtenue a partir des images 1 2 et 3',1,1,1);
+imwrite(uint8(Imoscoul3),'mosaique3_coul.jpg');

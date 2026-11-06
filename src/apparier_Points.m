@@ -49,6 +49,15 @@ vois1=voisinage(I1,Ptint1(indptI1,:),K);
 vois2=voisinage(I2,Ptint2(indptI2,:),K);
 vois1 = double(vois1);
 vois2 = double(vois2);
+
+% Exclusion des points dont le voisinage touche le fond noir d'une mosaique
+valides1 = all(vois1 > 0, 2);
+valides2 = all(vois2 > 0, 2);
+indptI1 = indptI1(valides1);
+indptI2 = indptI2(valides2);
+vois1 = vois1(valides1, :);
+vois2 = vois2(valides2, :);
+nbptintI1 = size(indptI1, 1); nbptintI2 = size(indptI2, 1);
 %%%%%%%%%%%%%%%%%
 %% A COMPLETER %%
 %%%%%%%%%%%%%%%%%

@@ -68,23 +68,34 @@ for x = 1:nbcImos
         x_R1 = x - O1x_Rmos;
         y_R1 = y - O1y_Rmos;
 
-        % Test d'appartenance a I1 (coordonnees entieres exactes)
+        % Test d'appartenance a I1 (coordonnees entieres exactes et pixel non noir)
         appartient_I1 = (x_R1 >= 1 && x_R1 <= nbcI1 && y_R1 >= 1 && y_R1 <= nblI1);
+        if appartient_I1
+            appartient_I1 = (I1(y_R1, x_R1) > 0);
+        end
 
         % Coordonnees projetees dans I2 par l'homographie H
         xy_R2 = appliquerHomographie(H, [x_R1 y_R1]);
         x_R2 = round(xy_R2(1));
         y_R2 = round(xy_R2(2));
 
-        % Test d'appartenance a I2
+        % Test d'appartenance a I2 (et pixel non noir)
         appartient_I2 = (x_R2 >= 1 && x_R2 <= nbcI2 && y_R2 >= 1 && y_R2 <= nblI2);
+        if appartient_I2
+            appartient_I2 = (I2(y_R2, x_R2) > 0);
+        end
 
         if appartient_I1 && appartient_I2
             % Zone de recouvrement : calcul des distances aux bords
-            % d1 : distance au bord droit de I1
-            % d2 : distance au bord gauche de I2
-            d1 = nbcI1 - x_R1;
-            d2 = x_R2;
+            if xmin < 1
+                % I2 est projetee a gauche de I1
+                d1 = x_R1;
+                d2 = nbcI2 - x_R2;
+            else
+                % I2 est projetee a droite de I1
+                d1 = nbcI1 - x_R1;
+                d2 = x_R2;
+            end
 
             p1 = d1 / (d1 + d2);
             p2 = d2 / (d1 + d2);
