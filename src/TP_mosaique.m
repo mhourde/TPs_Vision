@@ -78,30 +78,31 @@ imwrite(uint8(Imoscoul),'mosaique2_coul.pgm');
 % Version 4 pour la reconstruction avec 3 images %  
 % en couleurs et/ou en niveaux de gris           %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% MOSAIQUE ENTRE 2 ET 3
-% Harris
-H_inv=inv(H);
-H_inv=H_inv./H_inv(3,3);
-Imos21 = mosaiquebis(Im2,Im1,H_inv);
+% Detection et appariement entre Im2 et Im3
+[XY_3, Res_3] = harris(Im3, TailleFenetre, NbPoints, k);
+[XY_C2_3, XY_C3] = apparier_POI(Im2, XY_2, Im3, XY_3, TailleFenetre, seuil);
 
-[XY_3,Res_3] = harris(Im3,TailleFenetre,NbPoints,k);
-[XY_mos,Res_mos] = harris(Imos21,TailleFenetre,NbPoints,k);
+% Estimation de l'homographie entre Im2 et Im3
+H2 = homographie(XY_C2_3, XY_C3);
 
-% Apparier_POI
-[XY_CM,XY_C3] = apparier_POI(Imos21,XY_mos,Im3,XY_3,TailleFenetre,seuil);
-
-% Homographie
-H2 = homographie(XY_CM,XY_C3);
-
-% Mosaique en niveaux de gris
-Imos2 = mosaiquebis(Imos21,Im3,H2);
+% Mosaique a 3 images en niveaux de gris
+Imos3 = mosaique3(Im1, Im2, Im3, H, H2);
 figure; 
-affichage_image(uint8(Imos2),'Mosaique obtenue a partir des images 1 2 et 3',1,1,1);
-imwrite(uint8(Imos2),'mosaique3_bis.pgm');
+affichage_image(uint8(Imos3), 'Mosaique obtenue a partir des 3 images initiales', 1, 1, 1);
+imwrite(uint8(Imos3), 'mosaique3.pgm');
 
-% Mosaique en couleur avec les 3 images
-Imoscoul21 = mosaiquecoul(Im2_coul,Im1_coul,H_inv);
-Imoscoul3 = mosaiquecoul(Imoscoul21,Im3_coul,H2);
+% Mosaique a 3 images en couleur
+Imos3_coul = mosaique3(Im1_coul, Im2_coul, Im3_coul, H, H2);
 figure;
-affichage_image(uint8(Imoscoul3),'Mosaique couleur obtenue a partir des images 1 2 et 3',1,1,1);
-imwrite(uint8(Imoscoul3),'mosaique3_coul.jpg');
+affichage_image(uint8(Imos3_coul), 'Mosaique couleur obtenue a partir des 3 images initiales', 1, 1, 1);
+imwrite(uint8(Imos3_coul), 'mosaique3_coul.jpg');
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Version 5 pour la reconstruction avec N images %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Appel de mosaiqueN avec uniquement la liste d'images en entree
+% (les homographies et appariements sont geres automatiquement)
+images_coul = {Im1_coul, Im2_coul, Im3_coul};
+ImosN = mosaiqueN(images_coul);
+figure;
+affichage_image(uint8(ImosN), 'Mosaique obtenue avec mosaiqueN (N images)', 1, 1, 1);
